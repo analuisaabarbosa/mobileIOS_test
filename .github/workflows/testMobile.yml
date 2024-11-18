@@ -1,4 +1,4 @@
-name: Run WebdriverIO Tests
+name: EBAC CI
 
 on:
   push:
