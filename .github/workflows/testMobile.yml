@@ -15,12 +15,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20.18.0' 
-
 
       - name: Install dependencies
         run: npm install
@@ -30,10 +28,10 @@ jobs:
         working-directory: ./config
 
       - name: Set environment variables
+        run: |
+          echo "Environment: ${{ secrets.ENVIRONMENT }}" # Se ENVIRONMENT for um secret
         env:
           ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
-          run: | 
-            echo "Environment: $ENVIRONMENT"
 
       - name: Saucelabs Env
         env:
@@ -45,6 +43,6 @@ jobs:
 
       - name: Run tests
         env:
-          EMAIL: ${{ vars.EMAIL }}
-          PASSWORD: ${{ vars.PASSWORD }}
+          EMAIL: ${{ secrets.EMAIL }} # Usar secrets para variáveis sensíveis
+          PASSWORD: ${{ secrets.PASSWORD }}
         run: npm test
