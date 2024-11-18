@@ -29,5 +29,8 @@ jobs:
         run: ls -R
         working-directory: ./config
 
+      - name: Set environment variables
+        run: echo "ENVIRONMENT=saucelabs" >> $GITHUB_ENV
+
       - name: Run tests
         run: npm test
