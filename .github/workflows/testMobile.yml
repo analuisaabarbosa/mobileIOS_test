@@ -1,21 +1,30 @@
-name: EBAC CI Mobile
+name: Run WebdriverIO Tests
 
 on:
   push:
-    branches: [ci]
-
-  workflow_dispatch:
+    branches:
+      - main
+  pull_request:
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+    
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: "21"
-      - name: Install Dependencies
-        run: npm i
-      - name: Run Tests
-        run: npm t
+          node-version: '20.18.0' 
+
+
+      - name: Install dependencies
+        run: npm install
+
+      # Executa os testes com WebdriverIO
+      - name: Run tests
+        run: npm test
