@@ -1,9 +1,9 @@
-name: EBAC CI
+name: EBAC CI Mobile
 
 on:
   push:
     branches:
-      - main
+      - ci
   pull_request:
 
 jobs:
