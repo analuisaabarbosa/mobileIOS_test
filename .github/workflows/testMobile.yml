@@ -32,5 +32,10 @@ jobs:
       - name: Set environment variables
         run: echo "ENVIRONMENT=saucelabs" >> $GITHUB_ENV
 
+      - name: Set Sauce Labs credentials
+        run: echo "SAUCE_USERNAME=oauth-testesanaluisa23-51322" >> $GITHUB_ENV | echo "SAUCE_ACCESS_KEY=ab8784f7-b132-41ef-a1fe-5c999b1f5a0a" >> $GITHUB_ENV
+        
+
+
       - name: Run tests
         run: npm test
