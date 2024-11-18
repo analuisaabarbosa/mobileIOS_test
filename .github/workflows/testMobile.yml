@@ -23,8 +23,11 @@ jobs:
 
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      # Executa os testes com WebdriverIO
+      - name: Debug files
+        run: ls -R
+        working-directory: ./config
+
       - name: Run tests
         run: npm test
