@@ -1,12 +1,11 @@
 import "dotenv/config";
 import { sauceConf } from "./sauce.conf.js";
+import { bsConf } from "./bs.conf.js";
 
 function getConfig() {
   switch (process.env.ENVIRONMENT) {
-    case "local":
-      return console.log(
-        "Sem configuração para o ambiente local, rode com uma Device Farm."
-      );
+    case "browserstack":
+      return bsConf;
     case "saucelabs":
       return sauceConf;
   }
