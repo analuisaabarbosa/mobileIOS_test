@@ -5,6 +5,8 @@ on:
     branches:
       - ci
   pull_request:
+    branches:
+      - main
 
 jobs:
   test:
@@ -15,16 +17,33 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20.18.0' 
-
+          node-version: '20.18.0'
 
       - name: Install dependencies
         run: npm install
 
-      # Executa os testes com WebdriverIO
+      - name: Set environment variables
+        run: |
+          echo "ENVIRONMENT=${{ secrets.ENVIRONMENT }}" >> $GITHUB_ENV
+          echo "BROWSERSTACK_USERNAME=${{ secrets.BROWSERSTACK_USERNAME }}" >> $GITHUB_ENV
+          echo "BROWSERSTACK_ACCESS_KEY=${{ secrets.BROWSERSTACK_ACCESS_KEY }}" >> $GITHUB_ENV
+        env:
+          ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
+          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+
+      - name: Debug files
+        run: ls -R
+        working-directory: ./config
+
       - name: Run tests
         run: npm test
+        env:
+          ENVIRONMENT: ${{ secrets.ENVIRONMENT }} 
+          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+          EMAIL: ${{ vars.EMAIL }}
+          PASSWORD: ${{ vars.PASSWORD }}
