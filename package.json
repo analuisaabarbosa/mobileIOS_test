@@ -5,7 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "wdio run ./wdio.conf.js"
+    "test": "wdio run ./config/wdio.conf.js",
+    "test:checkoutFlow": "wdio run ./config/wdio.conf.js --suite checkoutFlow"
   },
   "author": "analuisaabarbosa",
   "license": "ISC",
