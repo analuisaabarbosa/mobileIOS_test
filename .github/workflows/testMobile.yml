@@ -32,12 +32,12 @@ jobs:
       - name: Set environment variables
         run: |
           echo "ENVIRONMENT=${{ secrets.ENVIRONMENT }}" >> $GITHUB_ENV
-          echo "SAUCELABS_USERNAME=${{ secrets.SAUCE_USERNAME }}" >> $GITHUB_ENV
-          echo "SAUCELABS_ACCESS_KEY=${{ secrets.SAUCE_ACCESS_KEY }}" >> $GITHUB_ENV
+          echo "SAUCE_USERNAME=${{ secrets.SAUCE_USERNAME }}" >> $GITHUB_ENV
+          echo "SAUCE_ACCESS_KEY=${{ secrets.SAUCE_ACCESS_KEY }}" >> $GITHUB_ENV
         env:
           ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
-          SAUCELABS_USERNAME: ${{ secrets.SAUCE_USERNAME }}
-          SAUCELABS_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
+          SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
+          SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
 
       # Etapa 5: Debug: Listar arquivos (opcional)
       - name: Debug files
@@ -49,7 +49,7 @@ jobs:
         run: npm test
         env:
           ENVIRONMENT: ${{ secrets.ENVIRONMENT }} 
-          SAUCELABS_USERNAME: ${{ secrets.SAUCE_USERNAME }}
-          SAUCELABS_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
+          SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
+          SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
           EMAIL: ${{ vars.EMAIL }}
           PASSWORD: ${{ vars.PASSWORD }}
