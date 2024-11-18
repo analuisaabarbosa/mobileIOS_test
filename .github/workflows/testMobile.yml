@@ -29,20 +29,20 @@ jobs:
 
       - name: Set environment variables
         run: |
-          echo "Environment: ${{ secrets.ENVIRONMENT }}" # Se ENVIRONMENT for um secret
+          echo "Environment: ${{ secrets.ENVIRONMENT }}" # Usando secrets para a variável de ambiente
         env:
-          ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
+          ENVIRONMENT: ${{ secrets.ENVIRONMENT }} # Variável de ambiente com valor secreto
 
       - name: Saucelabs Env
         env:
-          SAUCELABS_USERNAME: ${{ secrets.SAUCELABS_USERNAME }}
-          SAUCELABS_ACCESS_KEY: ${{ secrets.SAUCELABS_ACCESS_KEY }}
+          SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }} # Usando secrets para as credenciais do Sauce Labs
+          SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
         run: |
-          echo "Sauce Labs username: $SAUCELABS_USERNAME"
-          echo "Sauce Labs access key: $SAUCELABS_ACCESS_KEY"
+          echo "Sauce Labs username: $SAUCE_USERNAME"
+          echo "Sauce Labs access key: $SAUCE_ACCESS_KEY"
 
       - name: Run tests
         env:
-          EMAIL: ${{ secrets.EMAIL }} # Usar secrets para variáveis sensíveis
-          PASSWORD: ${{ secrets.PASSWORD }}
+          EMAIL: ${{ vars.EMAIL }} # Usando secrets para variáveis sensíveis
+          PASSWORD: ${{ vars.PASSWORD }}
         run: npm test
