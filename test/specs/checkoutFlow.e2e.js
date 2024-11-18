@@ -1,11 +1,9 @@
-import { expect } from "@wdio/globals";
 import homeScreen from "../screenobjects/home.screen";
 import loginScreen from "../screenobjects/login.screen";
 import searchScreen from "../screenobjects/search.screen";
 import mycartScreen from "../screenobjects/mycart.screen";
 import paymentScreen from "../screenobjects/payment.screen";
 import checkoutScreen from "../screenobjects/checkout.screen";
-// import 'dotenv/config'
 
 describe("Checkout Flow", () => {
   it("Should finish the shopping process with sucess", async () => {
