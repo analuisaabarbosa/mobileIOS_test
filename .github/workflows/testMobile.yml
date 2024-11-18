@@ -5,6 +5,8 @@ on:
     branches:
       - ci
   pull_request:
+    branches:
+      - main
 
 jobs:
   test:
@@ -12,37 +14,42 @@ jobs:
 
     steps:
     
+      # Etapa 1: Checkout do código
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # Etapa 2: Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20.18.0' 
+          node-version: '20.18.0'
 
+      # Etapa 3: Instalar dependências
       - name: Install dependencies
         run: npm install
 
+      # Etapa 4: Rodar o comando para verificar as variáveis de ambiente
+      - name: Set environment variables
+        run: |
+          echo "ENVIRONMENT=${{ secrets.ENVIRONMENT }}" >> $GITHUB_ENV
+          echo "SAUCELABS_USERNAME=${{ secrets.SAUCE_USERNAME }}" >> $GITHUB_ENV
+          echo "SAUCELABS_ACCESS_KEY=${{ secrets.SAUCE_ACCESS_KEY }}" >> $GITHUB_ENV
+        env:
+          ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
+          SAUCELABS_USERNAME: ${{ secrets.SAUCE_USERNAME }}
+          SAUCELABS_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
+
+      # Etapa 5: Debug: Listar arquivos (opcional)
       - name: Debug files
         run: ls -R
         working-directory: ./config
 
-      - name: Set environment variables
-        run: |
-          echo "Environment: ${{ secrets.ENVIRONMENT }}" # Usando secrets para a variável de ambiente
-        env:
-          ENVIRONMENT: ${{ secrets.ENVIRONMENT }} # Variável de ambiente com valor secreto
-
-      - name: Saucelabs Env
-        env:
-          SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }} # Usando secrets para as credenciais do Sauce Labs
-          SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
-        run: |
-          echo "Sauce Labs username: $SAUCE_USERNAME"
-          echo "Sauce Labs access key: $SAUCE_ACCESS_KEY"
-
+      # Etapa 6: Rodar testes
       - name: Run tests
-        env:
-          EMAIL: ${{ vars.EMAIL }} # Usando secrets para variáveis sensíveis
-          PASSWORD: ${{ vars.PASSWORD }}
         run: npm test
+        env:
+          ENVIRONMENT: ${{ secrets.ENVIRONMENT }} 
+          SAUCELABS_USERNAME: ${{ secrets.SAUCE_USERNAME }}
+          SAUCELABS_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
+          EMAIL: ${{ vars.EMAIL }}
+          PASSWORD: ${{ vars.PASSWORD }}
